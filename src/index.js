@@ -1,38 +1,17 @@
 //const express = require("express");
 
 import express from "express";
+import routes from "./route";
+import globalRouter from "./routers/globalRouter";
+import courseRouter from "./routers/courseRouter";
+import apiRouter from "./routers/apiRouter";
 
 const app = express();
 
-const handleHome = (req, res) => {
-  res.send("Home");
-};
+app.listen(4000, () => {
+  console.log("Listenning!");
+});
 
-const aboutUs = (req, res) => {
-  res.send("About Us");
-};
-
-const contact = (req, res) => {
-  res.send("Contact");
-};
-
-const protect = (req, res) => {
-  res.send("Protected");
-};
-
-const middleAll = (req, res, next) => {
-  console.log("I'm a middleware");
-  next();
-};
-
-const middleProtect = (req, res, next) => {
-  res.redirect("/");
-};
-
-// Codesanbox does not need PORT :)
-app.listen(4000, () => console.log(`Listening!`));
-
-app.get("/", middleAll, handleHome);
-app.get("/about-us", middleAll, aboutUs);
-app.get("/contact", middleAll, contact);
-app.get("/protected", middleAll, middleProtect, protect);
+app.use("/", globalRouter);
+app.use(routes.course, courseRouter);
+app.use(routes.api, apiRouter);
