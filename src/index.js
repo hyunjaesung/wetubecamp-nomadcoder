@@ -1,17 +1,18 @@
 //const express = require("express");
 
-import express from "express";
-import routes from "./route";
-import globalRouter from "./routers/globalRouter";
-import courseRouter from "./routers/courseRouter";
-import apiRouter from "./routers/apiRouter";
+import express from 'express';
+import routes from './route';
+import router from './router';
+import { localsMiddleware } from './localsMiddleware';
 
 const app = express();
 
-app.listen(4000, () => {
-  console.log("Listenning!");
+app.listen(4001, () => {
+	console.log('Listenning!');
 });
 
-app.use("/", globalRouter);
-app.use(routes.course, courseRouter);
-app.use(routes.api, apiRouter);
+app.use(localsMiddleware);
+
+app.set('view engine', 'pug');
+
+app.use('/', router);
