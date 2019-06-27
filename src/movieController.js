@@ -5,8 +5,8 @@ import {
   getMovieByMinimumYear
 } from "./db";
 
-export const home = (req, res) => {
-  const movies = getMovies();
+export const home = async (req, res) => {
+  const movies = await getMovies();
   res.render("movie", { movies: movies, pageTitle: "Movies!" });
 };
 
@@ -15,12 +15,12 @@ const getId = url => {
   return splitedUrl[1];
 };
 
-export const movieDetail = (req, res) => {
+export const movieDetail = async (req, res) => {
   const url = req.originalUrl;
 
   if (!url.includes("favicon")) {
     const id = getId(url);
-    const movie = getMovieById(id);
+    const movie = await getMovieById(id);
     if (!movie) {
       res.status(404).render("404");
       return;
@@ -29,18 +29,19 @@ export const movieDetail = (req, res) => {
   }
 };
 
-export const filterMovie = (req, res) => {
+export const filterMovie = async (req, res) => {
   const query = req.query;
-  console.log(query.year);
 
   if (query.year) {
-    const moviesByMinimumYear = getMovieByMinimumYear(parseInt(query.year));
+    const moviesByMinimumYear = await getMovieByMinimumYear(
+      parseInt(query.year)
+    );
     res.render("movie", {
       movies: moviesByMinimumYear,
       pageTitle: `Searching by year : ${query.year}`
     });
   } else if (query.rating) {
-    const moviesByMinimumRating = getMovieByMinimumRating(
+    const moviesByMinimumRating = await getMovieByMinimumRating(
       parseFloat(query.rating)
     );
     res.render("movie", {
