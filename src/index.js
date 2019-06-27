@@ -1,18 +1,12 @@
-//const express = require("express");
-
-import express from 'express';
-import routes from './route';
-import router from './router';
-import { localsMiddleware } from './localsMiddleware';
+import express from "express";
+import path from "path";
+import "./db";
+import movieRouter from "./movieRouter";
 
 const app = express();
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
+app.use("/", movieRouter);
 
-app.listen(4001, () => {
-	console.log('Listenning!');
-});
-
-app.use(localsMiddleware);
-
-app.set('view engine', 'pug');
-
-app.use('/', router);
+// Codesanbox does not need PORT :)
+app.listen(4000, () => console.log(`✅  Server Ready!`));

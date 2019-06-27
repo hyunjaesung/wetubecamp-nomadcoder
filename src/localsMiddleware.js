@@ -1,7 +1,7 @@
-import routes from './route';
+import routes from "./route";
 
 export const localsMiddleware = (req, res, next) => {
-	res.locals.siteName = 'HandsomeSteve';
-	res.locals.routes = routes;
-	next();
+  res.locals.siteName = "SteveMovie";
+  res.locals.routes = routes;
+  next();
 };

@@ -1,0 +1,8 @@
+extends layouts/main.pug 
+include mixins/movieBlock
+
+block content
+    .movie
+        div.description #{movie.description_full}
+        each genre in movie.genres
+            li=genre

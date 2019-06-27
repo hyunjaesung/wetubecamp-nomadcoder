@@ -1,0 +1,10 @@
+extends layouts/main.pug 
+include mixins/movieBlock
+
+block content
+    .movies
+        each movie in movies
+            +movieBlock({
+                id:movie.id,
+                title:movie.title
+            })
